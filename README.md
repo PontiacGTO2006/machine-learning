@@ -1,5 +1,20 @@
 # machine-learning
-Machine learning playground with TensorFlow. This is a "clean restart" version of the cluttered and messed-up "ai-projects" repository from August 2025. 
-It features many of the same projects and files, but with a cleaner setup and a Python .venv.
+This is an artificial intelligence/machine learning playground, primarily using sklearn, TensorFlow, and Keras. For personal reference, this is a "clean restart" version of the cluttered and messed-up "ai-projects" repository from August 2025. It features many of the same projects and files, but with a cleaner setup and a Python .venv.
 
-You'll notice that there's also a "sentiment_analysis.ipynb" file sitting out in the root directory. This is where I'm currently working in Google Colab and contains the latest code cells for the sentiment analysis model. I typically attempt to commit a latest version of the Colab file at the end of each day. (Why Colab, and switching away from local VS code environments? Because the AI training sucks down too many resources and lags the computer).
+This repository is divided into multiple folders, each of which contains a separate project. The "sentiment_analysis" folder contains all files and models relating to the Food Reviews Sentiment Analysis model, which is currently a work in progress and being maintained. This model is built off of an original model from the August 2025 repository and is deisnged to analyze the sentiment of a consumer review given multiple parameters.
+
+The "kaggle_titanic" folder contains all files/models relating to the [Kaggle Titanic - Machine Learning from Disaster](https://www.kaggle.com/competitions/titanic) challenge. Currently, it contains the training and testing data as CSVs, the model architecture and prediction mechanism as a Jupyter Notebook (.ipynb), and various submissions I've made to the challenge. 
+
+You'll notice that there's also a "sentiment_analysis.ipynb" file sitting out in the root directory, not classified in any folder. This is where I'm currently working in Google Colab and contains the latest code cells for the sentiment analysis model, since running the model locally began to chew down too many resources. Once I've reached a point of completion with the model (e.g., it actually does what it's supposed to), I'll move the completed .ipynb into the "sentiment_analysis" folder properly. 
+
+# Tooling and packages required
+I've programmed the majority of this repository using Python 3.12.2. In some cases, usually with the sentiment analysis model, the version is actually 3.11.4 due to some troubleshooting steps. If you're experiencing problems using any of the more recent models (e.g., the kaggle challenges or the titanic model), switch to Python 3.12.2. 
+
+Additionally, you need to have sklearn and sklearn.ensemble installed to run the more recent models (kaggle challenges). All of those projects rely on RandomForestClassifiers or other sklearn-specific things. If you want to run some of the older projets, like the CIFAR image classifier or the sentiment analysis model, you need to have Tensorflow 2.20 (deally) and Keras installed. Obviously, pandas and numpy is mandatory. There are some other miscellaneous packages that might be required, like "nltk" and "joblib" for sentiment analysis. Python will let you know if any of them aren't installed.
+
+# Complete project manifest
+Here's a list of all the projects/standalone models that are currently being maintained in this repository:
+- [Kaggle Titanic](https://github.com/PontiacGTO2006/machine-learning/tree/main/kaggle_titantic). Currently, my most active area. This is where I'm constructing a classification model to predict survivors of the Titanic shipwreck, based on existing data concerning passenger class, cabin, location, family members, and others. Conforms to the official Titanic Machine Learning from Disaster challenge.
+- [Sentiment Analysis](https://github.com/PontiacGTO2006/machine-learning/tree/main/sentiment_analysis). This is a model that's intended to predict the sentiment of a review (positive, negative, neutral) based on certain keywords. It's trained on a dataset of food reviews from Amazon, [which can be found here](https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews?resource=download). This project is still a work-in-progress and doesn't work quite yet, if you want to see the latest work then please open the "sentiment_analysis.ipynb" file that's sitting out in the root directory.
+- [CIFAR Image Classification Model]. The code for this model is coming soon, I just need to import it to the repository.
+- [QuickDraw Webcam Shape Recognition]. Like the above, I still need to import the code for this model into the repository.
