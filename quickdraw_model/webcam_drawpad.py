@@ -19,7 +19,7 @@ import tensorflow as tf
 import keras
 import os
 
-model_path = os.path.abspath("Unit3/quickdraw_project/models/quickdraw_model_shapes_v2.keras") # change path in models/ if using the fruit model
+model_path = os.path.abspath("quickdraw_model/models/quickdraw_model_shapes_v2.keras") # change path in models/ if using the fruit model
 model = keras.models.load_model(model_path)
 CLASS_NAMES = ['square', 'circle', 'triangle'] # change class names if using a different model
 
@@ -31,14 +31,21 @@ def predict(image):
     confidence = np.max(prediction)
     return label, confidence
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1, cv2.CAP_MSMF) # if using a laptop internal webcam, set this to 0. otherwise, set it to 1
+cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
+cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+
+
 if not cap.isOpened():
     print("Cannot access webcam.") # appears if you don't have a webcam plugged in
     exit()
 
 while True:
     ret, frame = cap.read()
-    if not ret:
+    if not ret or frame is None:
         print("Failed to grab frame.")
         break
 
