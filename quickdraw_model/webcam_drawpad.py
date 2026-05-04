@@ -1,5 +1,4 @@
 '''
-NOTE: AS OF LATEST UPDATE, THIS CODE DOES NOT WORK. FOR SOME REASON, THE POPUP WINDOW NEVER LAUNCHES.
 Filename: webcam_drawpad.py
 This is the main 'runner' for the QuickDraw webcam model. To run this
 file, you must have a webcam plugged in via USB to your computer that's able to see
@@ -11,6 +10,8 @@ model.
 To use the QuickDraw webcam model, simply run this code, draw your shape or fruit on a piece
 of paper (preferably black marker on white paper), and hold it up to the webcam. The popup window
 will then recognize the shape or the fruit with a confidence level.
+NOTE: You may need to use a thick marker like a Sharpie in order for the webcam to recognize the
+object properly. For best reults, hold the paper 3-5 inches away from the camera.
 '''
 
 import cv2
@@ -19,7 +20,7 @@ import tensorflow as tf
 import keras
 import os
 
-model_path = os.path.abspath("quickdraw_model/models/quickdraw_model_shapes_v2.keras") # change path in models/ if using the fruit model
+model_path = os.path.abspath("models/quickdraw_model_fruit_v2.keras") # change path in models/ if using the fruit model
 model = keras.models.load_model(model_path)
 CLASS_NAMES = ['square', 'circle', 'triangle'] # change class names if using a different model
 
@@ -31,7 +32,24 @@ def predict(image):
     confidence = np.max(prediction)
     return label, confidence
 
-cap = cv2.VideoCapture(1, cv2.CAP_MSMF) # if using a laptop internal webcam, set this to 0. otherwise, set it to 1
+def find_camera_indices():
+    available_indices = []
+    # Test indices 0 through 5
+    for i in range(6):
+        # We test with CAP_DSHOW as it's often more stable for discovery on Windows
+        cap = cv2.VideoCapture(i, cv2.CAP_DSHOW)
+        if cap.isOpened():
+            ret, frame = cap.read()
+            if ret:
+                print(f"Index {i}: Found a working camera!")
+                available_indices.append(i)
+            cap.release()
+    return available_indices
+
+indices = find_camera_indices()
+print(f"All available indices: {indices}")
+
+cap = cv2.VideoCapture(1, cv2.CAP_DSHOW) # if using a laptop internal webcam, set this to 0. otherwise, set it to 1
 cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
