@@ -1,1 +1,5 @@
 quickdraw_model/extracted_datasets/
+sentiment_analysis_data/Reviews.csv
+sentiment_analysis_data/Reviews.zip
+sentiment_analysis_data/glove.6B.100d.txt
+large_content/
